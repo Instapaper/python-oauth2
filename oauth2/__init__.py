@@ -538,7 +538,7 @@ class Request(dict):
             parameters.update(query_params)
 
 
-        if parameters:
+        if parameters or urlparse.urlparse(http_url)[4]:
             return cls(http_method, http_url, parameters)
 
         return None
