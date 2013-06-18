@@ -537,9 +537,17 @@ class Request(dict):
             query_params = cls._split_url_string(query_string)
             parameters.update(query_params)
 
+        # URL parameters.
+        param_str = urlparse.urlparse(http_url)[4] # query
+        url_params = cls._split_url_string(param_str)
+        parameters.update(url_params)
 
         if parameters or urlparse.urlparse(http_url)[4]:
-            return cls(http_method, http_url, parameters)
+            req = cls(http_method, http_url, parameters)
+            # use the normalized url because we already counted all query
+            # strings once
+            req.url = req.normalized_url
+            return req
 
         return None
 
