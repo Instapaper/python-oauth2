@@ -101,7 +101,7 @@ def to_unicode(s):
         if not isinstance(s, str):
             raise TypeError('You are required to pass either unicode or string here, not: %r (%s)' % (type(s), s))
         try:
-            s = s.decode('utf-8')
+            s = s.decode('utf-8', errors='ignore')
         except UnicodeDecodeError, le:
             raise TypeError('You are required to pass either a unicode object or a utf-8 string here. You passed a Python string object which contained non-utf-8: %r. The UnicodeDecodeError that resulted from attempting to interpret it as utf-8 was: %s' % (s, le,))
     return s
