@@ -442,15 +442,15 @@ class Request(dict):
 
     def get_parameter(self, parameter):
         ret = self.get(parameter)
-        if ret is None:
-            raise Error('Parameter not found: %s' % parameter)
         if not isinstance(ret, basestring):
             try:
                 return ret[0]
             except TypeError:
-                return ret
+                pass
             except IndexError:
-                return ''
+                ret = None
+        if ret is None:
+            raise Error('Parameter not found: %s' % parameter)
         return ret
 
     def get_normalized_parameters(self):
